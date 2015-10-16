@@ -4,3 +4,6 @@
 [submodule "miguelfervi"]
 	path = miguelfervi
 	url = https://github.com/miguelfervi/ProjectCC.git
+[submodule "tianyuan87"]
+	path = tianyuan87
+	url = https://github.com/tianyuan87/ProjectCC.git
