@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<head>
+	<title>Practica 3 - DAI</title>
+	<meta content="jmgn" name="author" />
+	<meta charset="UTF-8" />
+	<link href="../static/style.css" rel="stylesheet" type="text/css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="http://code.highcharts.com/modules/data.js"></script>
+	<script src="http://code.highcharts.com/modules/exporting.js"></script>
+	<script src="../static/coda.js"></script>
+</head>
+
+<body>
+
+	<header>
+		<div id="titulo"><img id="img_principal" src="../static/makoLogo.png" /></div>
+		<form action='login' method='post'>
+			${formulario}
+			<a href='/logout'>Logout</a>
+		</form>
+
+	</header>
+
+
+	<div id="pagina2">
+
+		<div id="menu">
+		  <ul>
+		    <li><a href="login" title="Pagina principal">Pagina principal</a></li>
+		    <li><a href="registro" title="Registro">Registro</a></li>
+		    <li><a href="ver_perfil" title="Ver datos">Ver datos de registro</a></li>
+		    <li><a href="editar_perfil" title="Editar datos">Editar datos de registro</a></li>
+		    <li><a href="mas_visitadas" title="Editar datos">Paginas mas visitadas</a></li>
+		    <li><a href="rss" title="rss">RSS</a></li>
+		    <li><a href="highchart" title="highchart">Highchart</a></li>
+		   	<li><a href="mapa" title="mapa">Google Maps</a></li>
+		  	<li><a href="twitter" title="Twitter">Twitter</a></li>
+		  </ul>
+		</div>
+
+		<div id="contenido">
+
+			<h2><center>Highchart</center></h2>
+
+			<table id="datatable">
+				<thead>
+					<tr>
+						<th></th>
+						<th>Hombres</th>
+						<th>Mujeres</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th>Menores de 18</th>
+						<td contentEditable>15</td>
+						<td contentEditable>12</td>
+					</tr>
+					<tr>
+						<th>Entre 18 y 30</th>
+						<td contentEditable>18</td>
+						<td contentEditable>20</td>
+					</tr>
+					<tr>
+						<th>Mayores de 30</th>
+						<td contentEditable>30</td>
+						<td contentEditable>50</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<p> Tipo de gráfica :  
+			<select name="tipoGrafica" id="tipoGrafica" >    
+		       <option value="column" selected="selected">Columnas</option>
+		       <option value="line">Líneas</option>
+		       <option value="area">Area</option>
+		       <option value="pie">Tarta</option>
+		   	</select>
+
+		   </p>
+
+			<button>Generar gráfica</button>
+			
+			<div id="container"></div>
+
+		</div>
+
+		<div id="footer">
+			<p>Autor: <b>jmgn</b></p>
+		</div>
+
+		
+	</div>
+
+
+</body>
+
+
+
+</html>
+
+
+</html>

@@ -1,0 +1,10 @@
+#boton_evento{color:#ffffff;background-color:#3a3f44;border-color:#3a3f44}
+
+#map_wrapper {
+    height: 400px;
+}
+
+#map_canvas {
+    width: 100%;
+    height: 100%;
+}

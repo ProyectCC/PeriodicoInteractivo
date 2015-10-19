@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<head>
+	<title>Practica 3 - DAI</title>
+	<meta content="jmgn" name="author" />
+	<meta charset="UTF-8" />
+	<link href="../static/style.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBeg7_wBHhNsW24D8To6ywYLweM-83sN7E&sensor=true"> </script>
+	<script src="../static/mapa.js"></script>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/jquery-1.4.4.js"></script>
+	<script src="http://code.jquery.com/jquery.tablesorter.js"></script> 
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script src="http://code.highcharts.com/modules/data.js"></script>
+	<script src="http://code.highcharts.com/modules/exporting.js"></script>
+	<script type="text/javascript">
+		$(function () {
+			$('#botonHighchart').click(
+			    function(){
+
+
+				document.getElementById('contenido-highchart').innerHTML="<div id='container'></div>"		
+
+
+			    $('#container').highcharts({
+
+			        chart: {
+			                type: 'column'
+			        },
+			        title: {
+			            text: 'Retweets medios'
+			        },
+	              	xAxis: {
+			            categories: ['Retweets']
+			        },
+			        yAxis: [{
+			            allowDecimals: false,
+			            title: {
+			                text: 'Número de retweets'
+			            }
+			        }],
+			        tooltip: {
+			            formatter: function() {
+			                return '<b>'+ this.series.name +'</b><br/>'+
+			                    this.point.y +' '+ this.point.name.toLowerCase();
+			            }
+			        },
+			      plotOptions: {
+			            bar: {
+			                dataLabels: {
+			                    enabled: true
+			                }
+			            }
+        			},
+			        legend: {
+				        layout: 'vertical',
+				        align: 'right',
+				        verticalAlign: 'top',
+				        x: -40,
+				        y: 100,
+				        floating: true,
+				        borderWidth: 1,
+				        backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+				        shadow: true
+			    	},
+			        series: [{
+			            name: 'RTs medios',
+			            data: [${rt_medio}, ${rt_medio}]
+			        }]
+			    });
+			 
+			});
+			});
+	</script>
+
+	<script type="text/javascript">
+		$(function () {
+			$('#botonHighchart2').click(
+			    function(){
+
+
+				document.getElementById('contenido-highchart').innerHTML="<div id='container'></div>"		
+
+			    $('#container').highcharts({
+			  		data: {
+			            table: document.getElementById('tabla_twitter'),
+			            startColumn: 2,
+			            endColumn: 3
+			        },
+			        chart: {
+			                type: 'line'
+			        },
+			        title: {
+			            text: 'Retweets por tweet'
+			        },
+			        yAxis: [{
+			        	min: 0,
+			            allowDecimals: false,
+			            title: {
+			                text: 'Número de retweets'
+			            }
+			        }],
+			       	xAxis: {
+			       		allowDecimals: false,
+			         	title: {
+			                text: 'Fecha publicacion'
+			            }
+			        },
+			        tooltip: {
+			            formatter: function() {
+			                return '<b>'+ this.series.name +'</b><br/>'+
+			                    this.point.y +' '+ this.point.name.toLowerCase();
+			            }
+			        }
+
+			    });
+			 
+			});
+			});
+	</script>
+
+	<script>
+	$('.Delete').live('click', function() {
+	$(this).closest('tr')
+	.children('td')
+	.animate({ padding: 0 })
+	.wrapInner('<tr />')
+	.children()
+	.slideUp(function() { $(this).closest('tr').remove(); });
+	return false;
+	});
+	</script>
+
+</head>
+
+<body>
+
+	<header>
+		<div id="titulo"><img id="img_principal" src="../static/makoLogo.png" /></div>
+		<form action='login' method='post'>
+			${formulario}
+			<a href='/logout'>Logout</a>
+		</form>
+
+	</header>
+
+
+	<div id="pagina2">
+
+		<div id="menu">
+		  <ul>
+		    <li><a href="login" title="Pagina principal">Pagina principal</a></li>
+		    <li><a href="registro" title="Registro">Registro</a></li>
+		    <li><a href="ver_perfil" title="Ver datos">Ver datos de registro</a></li>
+		    <li><a href="editar_perfil" title="Editar datos">Editar datos de registro</a></li>
+		    <li><a href="mas_visitadas" title="Editar datos">Paginas mas visitadas</a></li>
+		    <li><a href="rss" title="rss">RSS</a></li>
+		    <li><a href="highchart" title="highchart">Highchart</a></li>
+		    <li><a href="mapa" title="mapa">Google Maps</a></li>
+		  	<li><a href="twitter" title="Twitter">Twitter</a></li>
+		  </ul>
+		</div>
+
+		<div id="contenido">
+
+			<h2><center>Twitter</center></h2>
+
+			<form action='twitter' method='post'>
+				${form_twitter}
+			</form>
+			<form action='twitter' method='post'>
+				${form_twitter2}
+			</form>
+			<p>${mensaje_busqueda}</p>
+
+			<table id="tabla_twitter" class="tablesorter" style="width:100%">
+			  <tr>
+			    <td>Autor</td>
+			    <td>Texto</td>
+			    <td>Fecha</td>	
+			    <td>Retweets</td>	
+			    <td>Favoritos</td>	
+			    <td>Localizacion</td>	
+			  </tr>
+				% for i in range(len(tweets)):
+
+					<%
+						lat=""
+						lng=""
+						if tweets[i].coordinates is not None:
+							lat = tweets[i].coordinates['coordinates'][1]
+							lng = tweets[i].coordinates['coordinates'][0]
+					%>
+				     <tr>
+					    <td><a href="https://twitter.com/${tweets[i].author.screen_name}">${tweets[i].author.name}</a><input id='lat' type='hidden' value='37.17734'><input id='lng' type='hidden' value='-3.59856'></td>
+					    <td>${tweets[i].text}</td>	
+					    <td>${tweets[i].created_at}</td>
+					    <td>${tweets[i].retweet_count}</td>	
+					    <td>${tweets[i].favorite_count}</td>	
+						<td>
+					 	% if lat != "":
+						   		Latitud = ${lat}
+						   		<br />
+						   		Longitud = ${lng}
+								<button  onClick='initialize7()'>Mostrar en mapa</button>
+						% endif
+						</td>
+						<td><button class="Delete">Delete</button></td>
+				    </tr>
+				% endfor 
+				</table>
+				
+			<button id='botonHighchart'>Highchart RT medio</button>
+			<button id='botonHighchart2'>Highchart RT dinamico</button>
+			<section id="contenido-mapa">
+			</section>
+			<section id="contenido-highchart">
+			</section>
+
+			<script>
+
+			function initialize7() {
+				document.getElementById('contenido-mapa').innerHTML="<section id='map-canvas'></section>"
+				var latitud = document.getElementById('lat').value;
+				var longitud = document.getElementById('lng').value;
+				var myLatlng = new google.maps.LatLng(latitud,longitud);
+				var mapOptions = {zoom: 4, center: myLatlng};
+				var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+				var contentString = 'Twitter';
+				var infowindow = new google.maps.InfoWindow({
+					content: contentString
+				});
+				var marker = new google.maps.Marker({
+					position: myLatlng,
+					map: map,
+					title: 'Twitter',
+					icon: '../static/twitter.png'
+				});
+				  
+				google.maps.event.addListener(marker, 'click', function() {
+					infowindow.open(map,marker);
+				});
+			}
+
+			</script>
+
+		</div>
+
+		<div id="footer">
+			<p>Autor: <b>jmgn</b></p>
+		</div>
+
+		
+	</div>
+
+
+</body>
+
+</html>

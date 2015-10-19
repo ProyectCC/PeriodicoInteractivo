@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<head>
+	<title>Practica 3 - DAI</title>
+	<meta content="jmgn" name="author" />
+	<meta charset="UTF-8" />
+	<link href="../static/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+	<header>
+		<div id="titulo"><img id="img_principal" src="../static/makoLogo.png" /></div>
+		<form action='login' method='post'>
+			${formulario}
+			<a href='/logout'>Logout</a>
+		</form>
+
+	</header>
+
+
+	<div id="pagina">
+
+		<div id="menu">
+		  <ul>
+		    <li><a href="login" title="Pagina principal">Pagina principal</a></li>
+		    <li><a href="registro" title="Registro">Registro</a></li>
+		    <li><a href="ver_perfil" title="Ver datos">Ver datos de registro</a></li>
+		    <li><a href="editar_perfil" title="Editar datos">Editar datos de registro</a></li>
+		    <li><a href="mas_visitadas" title="Editar datos">Paginas mas visitadas</a></li>
+		    <li><a href="rss" title="rss">RSS</a></li>
+		    <li><a href="highchart" title="highchart">Highchart</a></li>
+		    <li><a href="mapa" title="mapa">Google Maps</a></li>
+		  	<li><a href="twitter" title="Twitter">Twitter</a></li>
+		  </ul>
+		</div>
+
+		<div id="contenido">
+
+			<h2><center> Este es el registro sublime </center></h2>
+			<p>Registrate ya hombre.</p>
+
+			<form action='registro' method='post'>
+				${registro}
+			</form>
+
+		</div>
+
+		<div id="footer">
+			<p>Autor: <b>jmgn</b></p>
+		</div>
+
+		
+	</div>
+
+
+</body>
+
+
+
+</html>

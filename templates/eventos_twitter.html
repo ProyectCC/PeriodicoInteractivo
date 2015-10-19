@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<head>
+	<title>Practica 3 - DAI</title>
+	<meta content="jmgn" name="author" />
+	<meta charset="UTF-8" />
+	<link href="../static/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="../static/evento.css" rel="stylesheet" type="text/css" />
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+	<!-- ui theme stylesheet - contents shown below -->
+<link rel="stylesheet" href="../static/theme.ice.css">
+
+
+<!-- tablesorter plugin -->
+<script src="../static/jquery.tablesorter.js"></script>
+<!-- tablesorter widget file - loaded after the plugin -->
+<script src="../static/jquery.tablesorter.widgets.js"></script>
+<script>
+$(function() {
+
+  // Extend the themes to change any of the default class names ** NEW **
+  $.extend($.tablesorter.themes.jui, {
+    // change default jQuery uitheme icons - find the full list of icons here: http://jqueryui.com/themeroller/ (hover over them for their name)
+    table      : 'ui-widget ui-widget-content ui-corner-all', // table classes
+    caption    : 'ui-widget-content ui-corner-all',
+    header     : 'ui-widget-header ui-corner-all ui-state-default', // header classes
+    footerRow  : '',
+    footerCells: '',
+    icons      : 'ui-icon', // icon class added to the <i> in the header
+    sortNone   : 'ui-icon-carat-2-n-s',
+    sortAsc    : 'ui-icon-carat-1-n',
+    sortDesc   : 'ui-icon-carat-1-s',
+    active     : 'ui-state-active', // applied when column is sorted
+    hover      : 'ui-state-hover',  // hover class
+    filterRow  : '',
+    even       : 'ui-widget-content', // odd row zebra striping
+    odd        : 'ui-state-default'   // even row zebra striping
+  });
+
+  // call the tablesorter plugin and apply the ui theme widget
+  $("table").tablesorter({
+
+    theme : 'ice', // theme "jui" and "bootstrap" override the uitheme widget option in v2.7+
+
+    headerTemplate : '{content} {icon}', // needed to add icon for jui theme
+
+    // widget code now contained in the jquery.tablesorter.widgets.js file
+    widgets : ['uitheme', 'zebra'],
+
+    widgetOptions : {
+      // zebra striping class names - the uitheme widget adds the class names defined in
+      // $.tablesorter.themes to the zebra widget class names
+      zebra   : ["even", "odd"],
+
+      // set the uitheme widget to use the jQuery UI theme class names
+      // ** this is now optional, and will be overridden if the theme name exists in $.tablesorter.themes **
+      // uitheme : 'jui'
+    }
+
+  });
+
+});
+</script>
+<script>
+jQuery(function($) {
+    // Asynchronously Load the map API 
+    var script = document.createElement('script');
+    script.src = "http://maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
+    document.body.appendChild(script);
+});
+/*
+var geocoder;
+var map;
+
+function initialize() {
+    var bounds = new google.maps.LatLngBounds();
+    var mapOptions = {
+        mapTypeId: 'roadmap'
+    };
+
+  	geocoder = new google.maps.Geocoder();
+                    
+    // Display a map on the page
+    map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+    map.setTilt(45);
+                                
+    // Loop through our array of markers & place each one on the map  
+    % for location in locations:
+      	var position = codeAddress('${location}');
+      	var position2 = new google.maps.LatLng(51.503454, -0.119562);
+        marker = new google.maps.Marker({
+            position: position2,
+            map: map,
+            title: '${location}'
+        });
+
+ 	% endfor    
+}
+
+function codeAddress(address) {
+  geocoder.geocode( { 'address': address}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+
+      return results[0].geometry.location;
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
+*/
+
+var map;
+
+function initialize() {
+    var bounds = new google.maps.LatLngBounds();
+    var mapOptions = {
+        mapTypeId: 'roadmap'
+    };
+                    
+    // Display a map on the page
+    map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+    map.setTilt(45);
+                               
+    // Display multiple markers on a map
+    var infoWindow = new google.maps.InfoWindow(), marker, i;
+
+    var position;
+
+   % for i in range(0,len(locations)-1):
+
+    // Loop through our array of markers & place each one on the map  
+        position = new google.maps.LatLng(${locations}[${i}],${locations}[${i}+1]);
+        bounds.extend(position);
+        marker = new google.maps.Marker({
+            position: position,
+            map: map,
+            title: 'Tweet'
+        });
+
+  	% endfor
+	
+
+        // Automatically center the map fitting all markers on the screen
+        map.fitBounds(bounds);
+
+    // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+    var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
+        this.setZoom(2);
+        google.maps.event.removeListener(boundsListener);
+    });
+    
+}
+
+</script>
+
+</head>
+
+<body>
+	<div class="navbar navbar-default"></div>
+
+	<h1><center>Eventos masivos - Twitter</center></h1>
+
+			<center>
+			<form action='eventos_twitter' method='post'>
+				${form}
+			</form>
+			</center>
+
+<div id="map_wrapper">
+    <div id="map_canvas" class="mapping"></div>
+</div>
+
+<table class="tablesorter">
+  <thead>
+    <tr class="info">
+      <th>Autor</th>
+      <th>Texto</th>
+      <th>Fecha</th>
+      <th>Retweets</th>
+    </tr>
+  </thead>
+  <tbody>
+	% for i in range(len(tweets)):
+
+	     <tr>
+		    <td><a href="https://twitter.com/${tweets[i].author.screen_name}">${tweets[i].author.name}</a></td>
+		    <td>${tweets[i].text}</td>	
+		    <td>${tweets[i].created_at}</td>
+		    <td>${tweets[i].retweet_count}</td>	
+	    </tr>
+	% endfor 				
+  </tbody>
+</table>
+</body>
+</html>
