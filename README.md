@@ -27,4 +27,12 @@ Cuando se nos pidió realizar un proyecto para la asignatura decidimos ampliar u
 Además podremos completar sus funcionalidades realizando análisis estadísticos, agregar un sistema de valoraciones o facilitar la subida de fotos, junto a varias facilidades y funcionalidades de redes sociales como Twitter. 
 
 
+##Procedimiento de realización
 
+Realizaremos la aplicación de la forma más modular posible, mejorando la estructura y apariencia, gestionando la base de datos y usuarios, y realizando y mostrando análisis y valoraciones.
+
+El lenguaje que será usado para el desarrollo de la aplicación web es Python que lo combinaremos con algún framework que permite un desarrollo rápido.
+
+##Relación con CC
+
+A la plataforma web será necesario crearle una correcta infraestructura virtual. Esto implica un adecuado provisionamiento, integración contínua y desplie
