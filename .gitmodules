@@ -7,3 +7,6 @@
 [submodule "cristobal"]
 	path = cristobal
 	url = https://github.com/JCristobal/ProjectCC.git
+[submodule "enpi"]
+	path = enpi
+	url = git://github.com/enpi/ProjectCC.git
