@@ -35,5 +35,5 @@ El lenguaje que será usado para el desarrollo de la aplicación web es Python q
 
 ##Relación con CC
 
-A la plataforma web será necesario crearle una correcta infraestructura virtual. Esto implica un adecuado provisionamiento, integración contínua y desplie automático. 
+A la plataforma web será necesario crearle una correcta infraestructura virtual. Esto implica un adecuado provisionamiento, integración contínua y despliegue automático. 
 
